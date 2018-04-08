@@ -1,3 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- SQL XML created by WWW SQL Designer, https://github.com/ondras/wwwsqldesigner/ -->
+<!-- Active URL: http://db.lewagon.com/ -->
 <sql>
 <datatypes db="mysql">
     <group label="Numeric" color="rgb(238,238,170)">
@@ -44,7 +47,7 @@
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="universities" row="id" />
 </row>
-<row name="university_reference_id" null="1" autoincrement="0">
+<row name="partner_id" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="universities" row="id" />
 </row>
@@ -63,9 +66,6 @@
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="address" row="id" />
 </row>
-<row name="partner" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
