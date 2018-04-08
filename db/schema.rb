@@ -10,10 +10,73 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180408154939) do
+ActiveRecord::Schema.define(version: 20180408155331) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "addresses", force: :cascade do |t|
+    t.bigint "country_id"
+    t.bigint "city_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["city_id"], name: "index_addresses_on_city_id"
+    t.index ["country_id"], name: "index_addresses_on_country_id"
+  end
+
+  create_table "banks", force: :cascade do |t|
+    t.bigint "country_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["country_id"], name: "index_banks_on_country_id"
+  end
+
+  create_table "cities", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "countries", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "flats", force: :cascade do |t|
+    t.bigint "city_id"
+    t.string "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["city_id"], name: "index_flats_on_city_id"
+  end
+
+  create_table "operators", force: :cascade do |t|
+    t.bigint "country_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["country_id"], name: "index_operators_on_country_id"
+  end
+
+  create_table "partnerships", force: :cascade do |t|
+    t.bigint "university_id"
+    t.bigint "partner_id"
+    t.boolean "confirmed"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["partner_id"], name: "index_partnerships_on_partner_id"
+    t.index ["university_id"], name: "index_partnerships_on_university_id"
+  end
+
+  create_table "universities", force: :cascade do |t|
+    t.string "name"
+    t.bigint "address_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["address_id"], name: "index_universities_on_address_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -32,4 +95,12 @@ ActiveRecord::Schema.define(version: 20180408154939) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "addresses", "cities"
+  add_foreign_key "addresses", "countries"
+  add_foreign_key "banks", "countries"
+  add_foreign_key "flats", "cities"
+  add_foreign_key "operators", "countries"
+  add_foreign_key "partnerships", "universities"
+  add_foreign_key "partnerships", "universities", column: "partner_id"
+  add_foreign_key "universities", "addresses"
 end
